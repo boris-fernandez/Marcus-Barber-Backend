@@ -1,5 +1,6 @@
 package com.marcus.barber.Marcus_Barber_Backend.model.producto;
 
+import com.marcus.barber.Marcus_Barber_Backend.model.producto.dto.DatosProducto;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,4 +33,12 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     @Query("select p.stock from producto  p " +
             "where p.id = :id")
     int buscarCantidadStock(long id);
+
+    @Query("select p from producto p " +
+            "inner join detallePedido dp on p.id = dp.producto.id " +
+            "group by p.id " +
+            "order by count(dp.pedido) desc " +
+            "limit 3")
+    List<Producto> top3Productos();
+
 }

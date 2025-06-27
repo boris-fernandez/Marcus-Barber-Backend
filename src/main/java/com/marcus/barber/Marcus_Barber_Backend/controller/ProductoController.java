@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.data.domain.Pageable;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("producto")
@@ -40,6 +41,11 @@ public class ProductoController {
         }
 
         return ResponseEntity.ok(productoService.filtrarProductos(categoria, marca, nombre, pageable));
+    }
+
+    @GetMapping("top")
+    public ResponseEntity<List<DatosProducto>> top3Productos(){
+        return ResponseEntity.ok(productoService.top3Productos());
     }
 
     @PatchMapping("/{id}")

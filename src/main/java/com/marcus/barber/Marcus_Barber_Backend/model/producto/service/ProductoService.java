@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 
 @Service
 public class ProductoService {
@@ -75,6 +77,10 @@ public class ProductoService {
         producto.actualizarEstado();
 
         productoRepository.save(producto);
+    }
+
+    public List<DatosProducto> top3Productos() {
+        return productoRepository.top3Productos().stream().map(producto -> new DatosProducto(producto)).toList();
     }
 
 }
