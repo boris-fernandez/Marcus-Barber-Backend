@@ -11,7 +11,6 @@ import com.marcus.barber.Marcus_Barber_Backend.model.pedido.dto.CrearPedido;
 import com.marcus.barber.Marcus_Barber_Backend.model.pedido.dto.DatosPedido;
 import com.marcus.barber.Marcus_Barber_Backend.model.producto.Producto;
 import com.marcus.barber.Marcus_Barber_Backend.model.producto.ProductoRepository;
-import com.marcus.barber.Marcus_Barber_Backend.model.usuario.Rol;
 import com.marcus.barber.Marcus_Barber_Backend.model.usuario.Usuario;
 import com.marcus.barber.Marcus_Barber_Backend.model.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,8 +42,8 @@ public class PedidoService {
     ArrayList<DetallesPedido> listaDetallesPedido = new ArrayList<>();
 
     public DatosPedido CrearPedido(CrearPedido crearPedido) {
-        Usuario usuario = usuarioRepository.findById(crearPedido.idUsuario())
-                .orElseThrow(() -> new ValidacionException("Usuario no encontrado con ID: " + crearPedido.idUsuario()));
+        Usuario usuario = usuarioRepository.findById(crearPedido.idCliente())
+                .orElseThrow(() -> new ValidacionException("Usuario no encontrado con ID: " + crearPedido.idCliente()));
 
         productoList = crearPedido.detallesPedidoDTOS().stream().map(detallesPedidoDTO -> {
             return productoRepository.findById(detallesPedidoDTO.idProducto())

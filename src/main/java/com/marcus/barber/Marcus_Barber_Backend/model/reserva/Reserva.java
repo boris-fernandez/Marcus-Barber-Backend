@@ -2,10 +2,7 @@ package com.marcus.barber.Marcus_Barber_Backend.model.reserva;
 
 import com.marcus.barber.Marcus_Barber_Backend.model.usuario.Usuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -13,6 +10,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "reserva")
 @Entity(name = "reserva")
 public class Reserva {

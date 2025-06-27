@@ -23,7 +23,7 @@ public class ReclamoController {
     @PostMapping
     public ResponseEntity<DatosReclamo> crearReclamo(@RequestBody CrearReclamo crearReclamo, UriComponentsBuilder builder){
         DatosReclamo reclamo = reclamoService.crearReclamo(crearReclamo);
-        URI uri = builder.path("reclamo/{id}").buildAndExpand(reclamo.id()).toUri();
+        URI uri = builder.path("/reclamo/{id}").buildAndExpand(reclamo.id()).toUri();
 
         return ResponseEntity.created(uri).body(reclamo);
     }
