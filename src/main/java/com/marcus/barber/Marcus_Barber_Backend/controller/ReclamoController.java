@@ -3,6 +3,7 @@ package com.marcus.barber.Marcus_Barber_Backend.controller;
 import com.marcus.barber.Marcus_Barber_Backend.model.reclamo.dto.CrearReclamo;
 import com.marcus.barber.Marcus_Barber_Backend.model.reclamo.dto.DatosReclamo;
 import com.marcus.barber.Marcus_Barber_Backend.model.reclamo.service.ReclamoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ public class ReclamoController {
     private ReclamoService reclamoService;
 
     @PostMapping
-    public ResponseEntity<DatosReclamo> crearReclamo(@RequestBody CrearReclamo crearReclamo, UriComponentsBuilder builder){
+    public ResponseEntity<DatosReclamo> crearReclamo(@RequestBody @Valid CrearReclamo crearReclamo, UriComponentsBuilder builder){
         DatosReclamo reclamo = reclamoService.crearReclamo(crearReclamo);
         URI uri = builder.path("/reclamo/{id}").buildAndExpand(reclamo.id()).toUri();
 

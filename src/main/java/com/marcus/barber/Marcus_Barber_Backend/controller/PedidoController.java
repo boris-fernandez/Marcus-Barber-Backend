@@ -5,6 +5,7 @@ import com.marcus.barber.Marcus_Barber_Backend.model.pedido.dto.ActualizarPedido
 import com.marcus.barber.Marcus_Barber_Backend.model.pedido.dto.CrearPedido;
 import com.marcus.barber.Marcus_Barber_Backend.model.pedido.dto.DatosPedido;
 import com.marcus.barber.Marcus_Barber_Backend.model.pedido.service.PedidoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +25,7 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @PostMapping
-    public ResponseEntity<DatosPedido> CrearPedido(@RequestBody CrearPedido crearPedido, UriComponentsBuilder builder){
+    public ResponseEntity<DatosPedido> CrearPedido(@RequestBody @Valid CrearPedido crearPedido, UriComponentsBuilder builder){
         DatosPedido datosPedido = pedidoService.CrearPedido(crearPedido);
         URI uri = builder.path("/pedido/{id}").buildAndExpand(datosPedido.id()).toUri();
         return ResponseEntity.created(uri).body(datosPedido);
@@ -44,7 +45,7 @@ public class PedidoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DatosPedido> actualizarEstadoPedido(@PathVariable long id, @RequestBody ActualizarPedido actualizarPedido) {
+    public ResponseEntity<DatosPedido> actualizarEstadoPedido(@PathVariable long id, @RequestBody @Valid ActualizarPedido actualizarPedido) {
         return ResponseEntity.ok(pedidoService.actualizarEstadoPedido(id, actualizarPedido));
     }
 

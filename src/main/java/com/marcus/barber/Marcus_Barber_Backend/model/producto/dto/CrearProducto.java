@@ -2,7 +2,7 @@ package com.marcus.barber.Marcus_Barber_Backend.model.producto.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 
 public record CrearProducto(
         @NotBlank(message = "El nombre no puede estar en blanco")
@@ -11,7 +11,7 @@ public record CrearProducto(
         String marca,
         @Min(value = 1, message = "El stock debe ser mayor a 0")
         int stock,
-        @NotNull(message = "El nombre no puede esta en blanco")
+        @Min(value = 1, message = "El precio debe ser mayor o igual a 1")
         double precio,
         @NotBlank(message = "El nombre no puede esta en blanco")
         String categoria,

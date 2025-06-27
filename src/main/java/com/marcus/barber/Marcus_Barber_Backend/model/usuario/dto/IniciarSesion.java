@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record IniciarSesion(
+
         String nombre,
 
         @Email(message = "El correo debe tener un formato válido")

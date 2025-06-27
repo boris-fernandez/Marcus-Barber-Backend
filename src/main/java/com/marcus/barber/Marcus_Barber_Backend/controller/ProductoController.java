@@ -43,7 +43,7 @@ public class ProductoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<DatosProducto> actualizarProducto(@PathVariable long id, @RequestBody ActualizarProducto actualizarProducto){
+    public ResponseEntity<DatosProducto> actualizarProducto(@PathVariable long id, @RequestBody @Valid ActualizarProducto actualizarProducto){
         return ResponseEntity.ok(productoService.actualizarProducto(id, actualizarProducto));
     }
 
