@@ -27,7 +27,6 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("admin")
-@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     @Autowired
@@ -43,14 +42,12 @@ public class AdminController {
     private ReservaService reservaService;
 
 
-
     //Pedidos
     @GetMapping("/pedido")
     public ResponseEntity<Page<DatosPedido>> obtenerPedidos(@PageableDefault(size = 5) Pageable pageable,
                                                             @RequestParam(required = false) Estado estado,
                                                             @RequestParam(required = false) String cliente,
                                                             @RequestParam(required = false) Date fecha) {
-
         if(estado == null && cliente == null){
             Page<DatosPedido> pedidos = pedidoService.listarPedidos(pageable);
             return ResponseEntity.ok(pedidos);
@@ -114,12 +111,14 @@ public class AdminController {
     @GetMapping("/reserva")
     public ResponseEntity<Page<DatosReserva>> listarReserva(@PageableDefault(size = 5) Pageable pageable,
                                                             @RequestParam(required = false) String cliente,
-                                                            @RequestParam(required = false) String estilista){
+                                                            @RequestParam(required = false) String estilista,
+                                                            @RequestParam(required = false) String sede,
+                                                            @RequestParam(required = false) Date fecha){
 
         if (cliente == null && estilista == null){
             return ResponseEntity.ok(reservaService.listarReserva(pageable));
         }
 
-        return ResponseEntity.ok(reservaService.filtroReserva(pageable, cliente, estilista));
+        return ResponseEntity.ok(reservaService.filtroReserva(pageable, cliente, estilista, sede, fecha));
     }
 }

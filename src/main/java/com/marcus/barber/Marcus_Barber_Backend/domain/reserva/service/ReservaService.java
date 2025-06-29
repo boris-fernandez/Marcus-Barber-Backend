@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class ReservaService {
 
@@ -47,7 +49,7 @@ public class ReservaService {
     }
 
 
-    public Page<DatosReserva> filtroReserva(Pageable pageable, String cliente, String estilista) {
-        return reservaRepository.findByUsuario_NombreOrEstilista(cliente, estilista, pageable).map(reserva -> new DatosReserva(reserva));
+    public Page<DatosReserva> filtroReserva(Pageable pageable, String cliente, String estilista, String sede, Date fecha) {
+        return reservaRepository.filtrarReservas(cliente, estilista, sede, fecha, pageable).map(reserva -> new DatosReserva(reserva));
     }
 }
