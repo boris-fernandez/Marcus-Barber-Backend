@@ -1,19 +1,14 @@
 package com.marcus.barber.Marcus_Barber_Backend.controller;
 
-import com.marcus.barber.Marcus_Barber_Backend.model.producto.dto.ActualizarProducto;
-import com.marcus.barber.Marcus_Barber_Backend.model.producto.dto.CrearProducto;
-import com.marcus.barber.Marcus_Barber_Backend.model.producto.dto.DatosProducto;
-import com.marcus.barber.Marcus_Barber_Backend.model.producto.service.ProductoService;
-import jakarta.validation.Valid;
+import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.DatosProducto;
+import com.marcus.barber.Marcus_Barber_Backend.domain.producto.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.data.domain.Pageable;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -22,14 +17,6 @@ public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
-
-    @PostMapping
-    public ResponseEntity<DatosProducto> crearProductoResponseEntity(@RequestBody @Valid CrearProducto producto, UriComponentsBuilder builder){
-        DatosProducto productoCreado = productoService.crearProducto(producto);
-        URI uri = builder.path("/producto/{id}").buildAndExpand(productoCreado.id()).toUri();
-
-        return ResponseEntity.created(uri).body(productoCreado);
-    }
 
     @GetMapping
     public ResponseEntity<Page<DatosProducto>> listaProductos(@PageableDefault(size = 12) Pageable pageable,
@@ -46,16 +33,5 @@ public class ProductoController {
     @GetMapping("top")
     public ResponseEntity<List<DatosProducto>> top3Productos(){
         return ResponseEntity.ok(productoService.top3Productos());
-    }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<DatosProducto> actualizarProducto(@PathVariable long id, @RequestBody @Valid ActualizarProducto actualizarProducto){
-        return ResponseEntity.ok(productoService.actualizarProducto(id, actualizarProducto));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarProducto(@PathVariable long id){
-        productoService.eliminarProducto(id);
-        return ResponseEntity.noContent().build();
     }
 }
