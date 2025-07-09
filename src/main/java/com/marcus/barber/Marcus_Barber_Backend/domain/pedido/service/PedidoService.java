@@ -1,5 +1,6 @@
 package com.marcus.barber.Marcus_Barber_Backend.domain.pedido.service;
 
+import com.marcus.barber.Marcus_Barber_Backend.domain.pedido.dto.DatosDetallesPedido;
 import com.marcus.barber.Marcus_Barber_Backend.exception.ValidacionException;
 import com.marcus.barber.Marcus_Barber_Backend.domain.pedido.Estado;
 import com.marcus.barber.Marcus_Barber_Backend.domain.pedido.Pedido;
@@ -48,8 +49,8 @@ public class PedidoService {
         Usuario usuario = (Usuario) authentication.getPrincipal();
 
         productoList = crearPedido.detallesPedidoDTOS().stream().map(detallesPedidoDTO -> {
-            return productoRepository.findById(detallesPedidoDTO.idProducto())
-                    .orElseThrow(() -> new ValidacionException("El producto con el ID: " + detallesPedidoDTO.idProducto() + " no existe"));
+            return productoRepository.findByNombre(detallesPedidoDTO.nombreProducto())
+                    .orElseThrow(() -> new ValidacionException("El producto con el nombre: " + detallesPedidoDTO.nombreProducto() + " no existe"));
         }).collect(Collectors.toList());
 
         //verificar stock
@@ -183,4 +184,12 @@ public class PedidoService {
         return pedido;
     }
 
+    public DatosPedido pedidoPorId(long id) {
+        if (!pedidoRepository.existsById(id)){
+            throw new ValidacionException("El pedido no existe");
+        }
+        List<DetallesPedido> detallesPedidos = detallesPedidosRepository.findByPedido_Id(id);
+
+        return pedidoRepository.findById(id).map(pedido -> new DatosPedido(pedido, detallesPedidos)).get();
+    }
 }

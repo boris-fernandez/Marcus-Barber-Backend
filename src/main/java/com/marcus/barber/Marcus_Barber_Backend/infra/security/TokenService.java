@@ -33,6 +33,7 @@ public class TokenService {
             throw new RuntimeException(exception);
         }
     }
+    
 
     public String getSubject(String token){
         if(token == null){

@@ -50,4 +50,12 @@ public class ReclamoService {
     public Page<DatosReclamo> filtroReclamo(Pageable pageable, String tipo, String cliente) {
         return reclamoRepository.findByTipoOrUsuario_Nombre(pageable, tipo, cliente).map(DatosReclamo::new);
     }
+
+    public DatosReclamo reclamoPorID(long id) {
+        if (!reclamoRepository.existsById(id)){
+            throw new ValidacionException("No existe el reclamo");
+        }
+
+        return reclamoRepository.findById(id).map(DatosReclamo::new).get();
+    }
 }

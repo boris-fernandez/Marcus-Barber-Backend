@@ -90,4 +90,10 @@ public class ProductoService {
         return productoRepository.top3Productos().stream().map(producto -> new DatosProducto(producto)).toList();
     }
 
+    public DatosProducto productoPorId(long id) {
+        if (!productoRepository.existsById(id)){
+            throw new ValidacionException("El producto no existe");
+        }
+        return productoRepository.findById(id).map(producto -> new DatosProducto(producto)).get();
+    }
 }

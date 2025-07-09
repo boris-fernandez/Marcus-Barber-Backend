@@ -52,4 +52,11 @@ public class ReservaService {
     public Page<DatosReserva> filtroReserva(Pageable pageable, String cliente, String estilista, String sede, Date fecha) {
         return reservaRepository.filtrarReservas(cliente, estilista, sede, fecha, pageable).map(reserva -> new DatosReserva(reserva));
     }
+
+    public DatosReserva reservaPorId(long id) {
+        if (!reservaRepository.existsById(id)){
+            throw new ValidacionException("No existe la reserva");
+        }
+        return reservaRepository.findById(id).map(DatosReserva::new).get();
+    }
 }

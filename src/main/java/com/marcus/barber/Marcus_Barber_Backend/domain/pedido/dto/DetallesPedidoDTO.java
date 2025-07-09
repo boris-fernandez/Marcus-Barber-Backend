@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record DetallesPedidoDTO(
         @NotNull(message = "El id del producto no debe estar en blanco")
-        Long idProducto,
+        String nombreProducto,
         @Min(value = 1, message = "La cantidad debe ser minimo 1")
         int cantidad
 ) {

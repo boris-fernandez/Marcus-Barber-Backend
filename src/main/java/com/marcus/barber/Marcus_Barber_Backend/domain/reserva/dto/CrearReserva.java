@@ -21,7 +21,6 @@ public record CrearReserva(
         @NotBlank(message = "El nombre del servicio no debe estar vacío")
         String servicio,
 
-        @NotBlank(message = "Los detalles no deben estar vacíos")
         String detalles
 ) {
 }

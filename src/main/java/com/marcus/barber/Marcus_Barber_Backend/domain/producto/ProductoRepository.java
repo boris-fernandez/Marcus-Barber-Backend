@@ -20,11 +20,15 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     List<Producto> findByCategoria(String categoria);
 
 
-    @Query("SELECT p FROM producto p WHERE " +
-            "(:nombre IS NULL OR p.nombre = :nombre) AND " +
-            "(:marca IS NULL OR p.marca = :marca) AND " +
-            "(:categoria IS NULL OR p.categoria = :categoria)")
+    @Query("""
+       SELECT p
+       FROM   producto p
+       WHERE  (:nombre IS NULL OR LOWER(p.nombre) LIKE LOWER(CONCAT('%', :nombre, '%')))
+       AND    (:marca IS NULL OR p.marca = :marca)
+       AND    (:categoria IS NULL OR p.categoria = :categoria)
+       """)
     Page<Producto> buscarConFiltros(String nombre, String marca, String categoria, Pageable pageable);
+
 
     @Query("""
     SELECT p FROM producto p

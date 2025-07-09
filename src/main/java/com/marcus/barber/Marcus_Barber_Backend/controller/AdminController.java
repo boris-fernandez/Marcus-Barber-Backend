@@ -55,6 +55,11 @@ public class AdminController {
         return ResponseEntity.ok(pedidoService.filtrarPedido(pageable, estado, cliente, fecha));
     }
 
+    @GetMapping("/pedido/{id}")
+    public ResponseEntity<DatosPedido> pedidoPorId(@PathVariable long id){
+        return ResponseEntity.ok(pedidoService.pedidoPorId(id));
+    }
+
     @PatchMapping("/pedido/{id}")
     public ResponseEntity<DatosPedido> actualizarEstadoPedido(@PathVariable long id, @RequestBody @Valid ActualizarPedido actualizarPedido) {
         return ResponseEntity.ok(pedidoService.actualizarEstadoPedido(id, actualizarPedido));
@@ -73,6 +78,11 @@ public class AdminController {
         }
 
         return ResponseEntity.ok(productoService.filtrarProductosAdmin(categoria, marca, nombre, stock, pageable));
+    }
+
+    @GetMapping("/producto/{id}")
+    public ResponseEntity<DatosProducto> productoPorId(@PathVariable long id){
+        return ResponseEntity.ok(productoService.productoPorId(id));
     }
 
     @PostMapping("/producto")
@@ -107,6 +117,11 @@ public class AdminController {
         return ResponseEntity.ok(reclamoService.filtroReclamo(pageable, tipo, cliente));
     }
 
+    @GetMapping("/reclamo/{id}")
+    public ResponseEntity<DatosReclamo> reclamoPorId(@PathVariable long id){
+        return ResponseEntity.ok(reclamoService.reclamoPorID(id));
+    }
+
     //Reserva
     @GetMapping("/reserva")
     public ResponseEntity<Page<DatosReserva>> listarReserva(@PageableDefault(size = 5) Pageable pageable,
@@ -120,5 +135,10 @@ public class AdminController {
         }
 
         return ResponseEntity.ok(reservaService.filtroReserva(pageable, cliente, estilista, sede, fecha));
+    }
+
+    @GetMapping("/reserva/{id}")
+    public ResponseEntity<DatosReserva> reservaPorId(@PathVariable long id){
+        return ResponseEntity.ok(reservaService.reservaPorId(id));
     }
 }

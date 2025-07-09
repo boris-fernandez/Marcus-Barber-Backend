@@ -30,6 +30,11 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.filtrarProductos(categoria, marca, nombre, pageable));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DatosProducto> productoPorId(@PathVariable long id){
+        return ResponseEntity.ok(productoService.productoPorId(id));
+    }
+
     @GetMapping("top")
     public ResponseEntity<List<DatosProducto>> top3Productos(){
         return ResponseEntity.ok(productoService.top3Productos());
