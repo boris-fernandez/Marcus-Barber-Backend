@@ -33,16 +33,17 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     @Query("""
     SELECT p FROM producto p
     WHERE 
-        (:nombre IS NULL OR p.nombre = :nombre) AND
-        (:marca IS NULL OR p.marca = :marca) AND
-        (:categoria IS NULL OR p.categoria = :categoria) AND
-        (
-            :stock IS NULL OR :stock = 'todo' OR
-            (:stock = 'bajo' AND p.stock > 0 AND p.stock <= 10) OR
-            (:stock = 'sin' AND p.stock = 0)
-        )
+      (:nombre IS NULL OR LOWER(p.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))) AND
+      (:marca IS NULL OR p.marca = :marca) AND
+      (:categoria IS NULL OR p.categoria = :categoria) AND
+      (
+        :stock IS NULL OR :stock = 'todo' OR
+        (:stock = 'bajo' AND p.stock > 0 AND p.stock <= 10) OR
+        (:stock = 'sin' AND p.stock = 0)
+      )
     """)
     Page<Producto> buscarConFiltrosAdmin(String nombre, String marca, String categoria, String stock, Pageable pageable);
+
 
 
     boolean existsByNombre(String nombre);
