@@ -24,8 +24,8 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     public DatosUsuario crearUsuario(CrearUsuario crearUsuario){
-        if (usuarioRepository.findByNombre(crearUsuario.nombre()).isPresent()) {
-            throw new ValidacionException("El usuario ya existe");
+        if (usuarioRepository.existsByCorreo(crearUsuario.correo())) {
+            throw new ValidacionException("El correo ya esta en uso");
         }
 
         Usuario usuario = Usuario.builder()

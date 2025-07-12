@@ -15,9 +15,9 @@ public class AuthenticactionService implements UserDetailsService {
 
     @Override
     public final UserDetails loadUserByUsername(String nombre) throws UsernameNotFoundException {
-        if (!usuarioRepository.existsByNombreOrCorreo(nombre, nombre)){
+        if (!usuarioRepository.existsByCorreo(nombre)){
             throw new ValidacionException("Credenciales incorrectas");
         }
-        return usuarioRepository.findByNombreOrCorreo(nombre, nombre);
+        return usuarioRepository.findByCorreo(nombre);
     }
 }

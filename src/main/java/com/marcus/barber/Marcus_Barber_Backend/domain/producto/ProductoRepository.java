@@ -59,4 +59,9 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
             "limit 3")
     List<Producto> top3Productos();
 
+    @Query("SELECT DISTINCT p.marca FROM producto p")
+    List<String> findAllDistinctMarca();
+
+    @Query("SELECT DISTINCT p.categoria FROM producto p")
+    List<String> findAllDistinctCategoria();
 }

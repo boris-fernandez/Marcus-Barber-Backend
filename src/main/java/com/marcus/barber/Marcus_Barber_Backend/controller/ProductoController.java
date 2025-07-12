@@ -1,6 +1,8 @@
 package com.marcus.barber.Marcus_Barber_Backend.controller;
 
+import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.CategoriasProducto;
 import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.DatosProducto;
+import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.MarcasProducto;
 import com.marcus.barber.Marcus_Barber_Backend.domain.producto.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,5 +40,15 @@ public class ProductoController {
     @GetMapping("top")
     public ResponseEntity<List<DatosProducto>> top3Productos(){
         return ResponseEntity.ok(productoService.top3Productos());
+    }
+
+    @GetMapping("/marcas")
+    public ResponseEntity<List<MarcasProducto>> marcasProducto(){
+        return ResponseEntity.ok(productoService.marcasProducto());
+    }
+
+    @GetMapping("/categorias")
+    public ResponseEntity<List<CategoriasProducto>> categoriasProducto(){
+        return ResponseEntity.ok(productoService.categoriasProducto());
     }
 }

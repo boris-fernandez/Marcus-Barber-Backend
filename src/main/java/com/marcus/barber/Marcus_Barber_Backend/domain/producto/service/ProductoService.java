@@ -1,11 +1,9 @@
 package com.marcus.barber.Marcus_Barber_Backend.domain.producto.service;
 
+import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.*;
 import com.marcus.barber.Marcus_Barber_Backend.exception.ValidacionException;
 import com.marcus.barber.Marcus_Barber_Backend.domain.producto.Producto;
-import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.ActualizarProducto;
-import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.CrearProducto;
 import com.marcus.barber.Marcus_Barber_Backend.domain.producto.ProductoRepository;
-import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.DatosProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -95,5 +93,13 @@ public class ProductoService {
             throw new ValidacionException("El producto no existe");
         }
         return productoRepository.findById(id).map(producto -> new DatosProducto(producto)).get();
+    }
+
+    public List<MarcasProducto> marcasProducto(){
+        return productoRepository.findAllDistinctMarca().stream().map(MarcasProducto::new).toList();
+    }
+
+    public List<CategoriasProducto> categoriasProducto() {
+        return productoRepository.findAllDistinctCategoria().stream().map(CategoriasProducto::new).toList();
     }
 }
