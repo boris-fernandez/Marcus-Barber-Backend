@@ -1,5 +1,6 @@
 package com.marcus.barber.Marcus_Barber_Backend.infra.errors;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.marcus.barber.Marcus_Barber_Backend.exception.CredencialesInvalidasException;
 import com.marcus.barber.Marcus_Barber_Backend.exception.ValidacionException;
 import jakarta.persistence.EntityNotFoundException;

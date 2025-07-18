@@ -14,11 +14,6 @@ RUN ./mvnw clean package -DskipTests
 FROM eclipse-temurin:21
 WORKDIR /app
 
-ENV URL_BD=
-ENV USER_BD=
-ENV PASSWORD_BD=
-ENV SECRET_KEY=
-
 COPY --from=builder /marcus-barber/target/Marcus-Barber-backend-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080

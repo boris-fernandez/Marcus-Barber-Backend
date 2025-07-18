@@ -8,6 +8,10 @@ import com.marcus.barber.Marcus_Barber_Backend.domain.reserva.dto.DatosReserva;
 import com.marcus.barber.Marcus_Barber_Backend.domain.usuario.Usuario;
 import com.marcus.barber.Marcus_Barber_Backend.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -25,6 +29,10 @@ public class ReservaService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private CacheManager cacheManager;
+
+    @CacheEvict(value = "LISTA_RESERVA", allEntries = true)
     public DatosReserva crearReserva(CrearReserva crearReserva) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Usuario usuario = (Usuario) authentication.getPrincipal();
@@ -41,9 +49,11 @@ public class ReservaService {
 
         reservaRepository.save(reserva);
 
+        cacheManager.getCache("RESERVA").put("RESERVA_" + reserva.getId(), reserva);
         return new DatosReserva(reserva);
     }
 
+    @Cacheable(value = "LISTA_RESERVA", key = "#pageable.pageNumber")
     public Page<DatosReserva> listarReserva(Pageable pageable) {
         return reservaRepository.findAll(pageable).map(reserva -> new DatosReserva(reserva));
     }
@@ -53,6 +63,7 @@ public class ReservaService {
         return reservaRepository.filtrarReservas(cliente, estilista, sede, fecha, pageable).map(reserva -> new DatosReserva(reserva));
     }
 
+    @Cacheable(value = "RESERVA", key = "#id")
     public DatosReserva reservaPorId(long id) {
         if (!reservaRepository.existsById(id)){
             throw new ValidacionException("No existe la reserva");

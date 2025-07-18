@@ -5,6 +5,7 @@ import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.DatosProducto
 import com.marcus.barber.Marcus_Barber_Backend.domain.producto.dto.MarcasProducto;
 import com.marcus.barber.Marcus_Barber_Backend.domain.producto.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;

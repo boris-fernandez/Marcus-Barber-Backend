@@ -8,6 +8,9 @@ import com.marcus.barber.Marcus_Barber_Backend.domain.reclamo.dto.DatosReclamo;
 import com.marcus.barber.Marcus_Barber_Backend.domain.usuario.Usuario;
 import com.marcus.barber.Marcus_Barber_Backend.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -23,6 +26,9 @@ public class ReclamoService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private CacheManager cacheManager;
 
 
     public DatosReclamo crearReclamo(CrearReclamo crearReclamo) {
@@ -40,9 +46,13 @@ public class ReclamoService {
                 .build();
 
         reclamoRepository.save(reclamo);
+
+        cacheManager.getCache("RECLAMO").put("RECLAMO_" + reclamo.getId(), reclamo);
+
         return new DatosReclamo(reclamo);
     }
 
+    @Cacheable(value = "LISTA_RECLAMO", key = "#pageable.pageNumber")
     public Page<DatosReclamo> listarReclamo(Pageable pageable) {
         return  reclamoRepository.findAll(pageable).map(DatosReclamo::new);
     }
@@ -51,6 +61,7 @@ public class ReclamoService {
         return reclamoRepository.findByTipoOrUsuario_Nombre(pageable, tipo, cliente).map(DatosReclamo::new);
     }
 
+    @Cacheable(value = "RECLAMO", key = "'RECLAMO_' + #id")
     public DatosReclamo reclamoPorID(long id) {
         if (!reclamoRepository.existsById(id)){
             throw new ValidacionException("No existe el reclamo");
