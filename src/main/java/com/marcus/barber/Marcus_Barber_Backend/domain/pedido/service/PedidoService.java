@@ -106,6 +106,7 @@ public class PedidoService {
         return new PageImpl<>(datosPedidosPaginados, pageable, datosPedidos.size());
     }
 
+
     public Page<DatosPedido> filtrarPedido(Pageable pageable, Estado estado, String cliente, Date fecha) {
         Page<Pedido> pedidoList = pedidoRepository.filtrarPorClienteEstadoYFecha(cliente, estado, fecha, pageable);
         List<DetallesPedido> todosLosDetalles = pedidoList.stream()
