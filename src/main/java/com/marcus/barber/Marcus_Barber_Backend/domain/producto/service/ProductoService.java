@@ -35,6 +35,7 @@ public class ProductoService {
                 .marca(crearPedido.marca())
                 .stock(crearPedido.stock())
                 .precio(crearPedido.precio())
+                .estado(true)
                 .categoria(crearPedido.categoria())
                 .imagenPrincipal(crearPedido.imagenPrincipal())
                 .imagenSecundaria(crearPedido.imagenSecundaria())

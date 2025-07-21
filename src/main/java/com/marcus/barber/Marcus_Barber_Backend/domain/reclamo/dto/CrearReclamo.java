@@ -19,5 +19,5 @@ public record CrearReclamo(
         String descripcion,
         @NotBlank(message = "La solicitud no debe estar vacio")
         String solicitud
-)implements Serializable {
+) {
 }

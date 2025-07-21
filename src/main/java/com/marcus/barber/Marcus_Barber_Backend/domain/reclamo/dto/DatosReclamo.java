@@ -14,7 +14,7 @@ public record DatosReclamo(
         Date fechaServicio,
         String descripcion,
         String solicitud
-) implements Serializable {
+) implements Serializable{
     public DatosReclamo(Reclamo reclamo) {
         this(reclamo.getId(),
                 reclamo.getUsuario().getNombre(),
