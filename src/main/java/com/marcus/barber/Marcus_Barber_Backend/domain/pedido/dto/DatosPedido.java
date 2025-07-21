@@ -4,6 +4,7 @@ import com.marcus.barber.Marcus_Barber_Backend.domain.pedido.Estado;
 import com.marcus.barber.Marcus_Barber_Backend.domain.pedido.Pedido;
 import com.marcus.barber.Marcus_Barber_Backend.domain.pedido.detallesPedido.DetallesPedido;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public record DatosPedido(
         Estado estado,
         List<DatosDetallesPedido> productos,
         Double total
-) {
+) implements Serializable {
 
     public DatosPedido(Pedido pedido, List<DetallesPedido> detalles) {
         this(

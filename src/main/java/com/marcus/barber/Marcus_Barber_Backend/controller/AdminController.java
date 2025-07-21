@@ -68,7 +68,7 @@ public class AdminController {
 
     //Productos
     @GetMapping("/producto")
-    public ResponseEntity<Page<DatosProducto>> listaProductos(@PageableDefault(size = 12) Pageable pageable,
+    public ResponseEntity<Page<DatosProducto>> listaProductos(@PageableDefault(size = 8) Pageable pageable,
                                                               @RequestParam(required = false) String categoria,
                                                               @RequestParam(required = false)  String marca,
                                                               @RequestParam(required = false) String nombre,

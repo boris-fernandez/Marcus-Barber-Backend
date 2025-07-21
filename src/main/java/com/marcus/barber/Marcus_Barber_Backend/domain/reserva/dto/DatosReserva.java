@@ -2,6 +2,7 @@ package com.marcus.barber.Marcus_Barber_Backend.domain.reserva.dto;
 
 import com.marcus.barber.Marcus_Barber_Backend.domain.reserva.Reserva;
 
+import java.io.Serializable;
 import java.util.Date;
 
 public record DatosReserva(
@@ -13,7 +14,7 @@ public record DatosReserva(
         Date fecha,
         String servicio,
         String detalles
-) {
+) implements Serializable {
     public DatosReserva(Reserva reserva) {
         this(reserva.getId(), reserva.getUsuario().getNombre(), reserva.getEstilista(),
                 reserva.getTurno(), reserva.getSede(), reserva.getFecha(), reserva.getServicio(),

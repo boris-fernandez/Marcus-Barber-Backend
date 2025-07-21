@@ -4,6 +4,7 @@ import com.marcus.barber.Marcus_Barber_Backend.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -13,7 +14,7 @@ import java.util.Date;
 @Builder
 @Table(name = "reserva")
 @Entity(name = "reserva")
-public class Reserva {
+public class Reserva implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

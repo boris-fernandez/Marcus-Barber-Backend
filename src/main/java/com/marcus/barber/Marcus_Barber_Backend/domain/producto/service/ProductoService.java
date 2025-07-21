@@ -47,7 +47,7 @@ public class ProductoService {
         return new DatosProducto(producto);
     }
 
-    @Cacheable(value = "PRODUCTO_LISTA", key = "'PRODUCTOS_' + #pageable.pageNumber")
+    @Cacheable(value = "PRODUCTO_LISTA", key = "'PRODUCTOS_NUMBER' + #pageable.pageNumber + '_SIZE' + #pageable.pageSize")
     public Page<DatosProducto> listaProducto(Pageable pageable){
         Page<DatosProducto> productoList = productoRepository.findAll(pageable).map(producto -> new DatosProducto(producto));
 

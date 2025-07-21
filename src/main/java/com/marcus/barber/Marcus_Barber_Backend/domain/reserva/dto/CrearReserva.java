@@ -3,6 +3,7 @@ package com.marcus.barber.Marcus_Barber_Backend.domain.reserva.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.io.Serializable;
 import java.util.Date;
 
 public record CrearReserva(
@@ -22,5 +23,5 @@ public record CrearReserva(
         String servicio,
 
         String detalles
-) {
+)implements Serializable {
 }
